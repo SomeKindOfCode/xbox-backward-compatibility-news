@@ -1,3 +1,5 @@
 <?php
 
-Flight::route('/', ['XboxController', 'feed']);
+Flight::route('/', ['XboxController', 'index']);
+Flight::route('/feed', ['XboxController', 'feed']);
+Flight::route('/feed/weekly', ['XboxController', 'feedWeekly']);

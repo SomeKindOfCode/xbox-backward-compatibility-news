@@ -5,7 +5,15 @@ class XboxController {
 
     }
 
+    public static function index() {
+        echo "Index Page";
+    }
+
     public static function feed() {
-        echo "Hello World";
+        echo "Feed - Regular";
+    }
+
+    public static function feedWeekly() {
+        echo "Feed - Weekly";
     }
 }
