@@ -15,6 +15,20 @@ In the project root, run `composer install` on the command line and execute the 
 In the default setup, this app uses *SQLite* and stores the database in the `db` folder.
 To modify these settings, take a look at the [Medoo Documentation](http://medoo.in/api/new) and modify `app/bootstrap.php` as desired.
 
+## Available Routes
+
+### /
+
+Displays the Index
+
+### /feed
+
+Displays all games as an RSS Feed ordered by the date they got imported to the local database
+
+### /feed/weekly
+
+Displays all games grouped by weeks as an RSS Feed 
+
 ---
 
 *by [somekindofcode.com](https://somekindofcode.com)*
