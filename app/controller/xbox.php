@@ -86,9 +86,15 @@ class XboxController {
         $groupedGames = [];
 
         // Try grabbing the games from cache or rebuild it
-        if(!$cache->has()) {
+        if(true){//}!$cache->has()) {
             // No Cache
-            $games = $database->select('games', '*');
+            $games = $database->select(
+                'games',
+                '*',
+                [
+                    'ORDER' => 'date_imported DESC'
+                ]
+            );
 
             foreach($games as $singleGame) {
                 $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('W-Y');
