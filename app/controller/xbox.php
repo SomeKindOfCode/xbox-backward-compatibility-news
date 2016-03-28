@@ -138,7 +138,7 @@ class XboxController {
 
     public static function feed() {
         self::importIfNeeded();
-global $database;
+        
         // Group Games by Year-Month-Day
         $groupedGames = [];
 
