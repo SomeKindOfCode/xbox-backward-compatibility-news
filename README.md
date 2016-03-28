@@ -7,6 +7,8 @@ This script grabs the list of Xbox 360 games that are backward compatible with t
 - [Flight](http://flightphp.com)
 - [Medoo](http://medoo.in)
 
+We also use APC Cache to improve caching, so make sure it is available.
+
 ## Setup
 
 Clone the repository into your desired folder and point your server root directory to the `public` folder.
