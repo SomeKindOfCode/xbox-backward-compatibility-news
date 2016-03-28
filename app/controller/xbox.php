@@ -77,9 +77,7 @@ class XboxController {
         global $database;
         $games = $database->select('games', '*');
 
-        echo "<pre>";
-        print_r($games);
-        echo "</pre>";
+        Flight::render('xbox/index.php', array('games' => $games));
     }
 
     public static function feed() {
