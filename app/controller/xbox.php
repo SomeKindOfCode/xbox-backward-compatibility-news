@@ -2,7 +2,6 @@
 
 class XboxController {
     private static $importList = "http://www.xbox.com/en-US/xbox-one/backward-compatibility/bcglist.js";
-    private static $apc_key = 'xb_bc_input';
 
     private static function slug($string) {
         $string = trim($string); // remove trailing spaces
@@ -11,8 +10,10 @@ class XboxController {
         return $string;
     }
 
-    public static function getInput() {
-        if (!apc_exists(self::$apc_key)) {
+    private static function getInput() {
+        $cache = new Cache('xb_bc_input');
+
+        if (!$cache->has()) {
             $input_raw = file_get_contents(self::$importList);
 
             // Extract only the array of games
@@ -31,12 +32,12 @@ class XboxController {
             $input_games_array = json_decode($input_games_json, true);
 
             // place in cache
-            apc_store(self::$apc_key, $input_games_array, 60 * 60); // Cache for an hour - TTL given in seconds
+            $cache->set($input_games_array, 60 * 60); // Cache for an hour - TTL given in seconds
 
             return $input_games_array;
         } else {
             // Load from cache
-            return apc_fetch(self::$apc_key);
+            return $cache->get();
         }
     }
 

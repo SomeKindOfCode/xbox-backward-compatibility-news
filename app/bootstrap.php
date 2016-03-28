@@ -8,6 +8,7 @@ $database = new medoo([
 Flight::set('flight.views.path', __DIR__ . '/../views');
 
 // Setup Controller
+require 'controller/cache.php';
 require 'controller/xbox.php';
 
 // Setup Routes
