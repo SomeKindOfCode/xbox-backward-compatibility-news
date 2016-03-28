@@ -5,6 +5,8 @@ $database = new medoo([
     'database_file' => __DIR__ . '/../db/db.sqlite'
 ]);
 
+Flight::set('flight.views.path', __DIR__ . '/../views');
+
 // Setup Controller
 require 'controller/xbox.php';
 
