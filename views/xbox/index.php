@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>New Xbox Backward Compatibility Games</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
         <style>
             html, body {
                 margin: 0px;
@@ -16,11 +17,40 @@
                 margin: 15px auto;
                 max-width: 920px;
             }
+            .feeds {
+                text-align: center;
+                margin: 0px auto;
+            }
+            .feeds a {
+                color: white;
+                text-decoration: none;
+            }
+            .feed {
+                background: #f60;
+                display: inline-block;
+                border-radius: 10px;
+                padding: 5px 10px;
+            }
+            .feed:hover {
+                opacity: 0.4;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             <h1>Weekly Backwards Compatibility</h1>
+            <div class="feeds">
+                <a href="/feed">
+                    <div class="feed">
+                        <i class="fa fa-rss"></i> Daily
+                    </div>
+                </a>
+                <a href="/feed/weekly">
+                    <div class="feed">
+                        <i class="fa fa-rss"></i> Weekly
+                    </div>
+                </a>
+            </div>
         <?php foreach($gamesByWeek as $week => $weeklyGames){ ?>
             <h2>
                 <?php
