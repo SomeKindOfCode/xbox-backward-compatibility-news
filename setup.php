@@ -9,6 +9,7 @@ $database->query('CREATE TABLE IF NOT EXISTS games (
 	name   			TEXT,
     slug   			TEXT,
     image  			TEXT,
+    url  			TEXT,
 	date_imported 	DATETIME
 )');
 
