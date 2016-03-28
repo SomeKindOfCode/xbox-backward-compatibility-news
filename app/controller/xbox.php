@@ -86,7 +86,7 @@ class XboxController {
         $groupedGames = [];
 
         // Try grabbing the games from cache or rebuild it
-        if(true){//}!$cache->has()) {
+        if(!$cache->has()) {
             // No Cache
             $games = $database->select(
                 'games',
