@@ -68,31 +68,54 @@ class XboxController {
         // Insert new games
         if(count($new_games) > 0){
             $database->insert('games', $new_games);
-            echo "Imported new games";
-        } else {
-            echo "No new games";
         }
     }
+
+    private static function importIfNeeded() {
+        $cache = new Cache('xb_bc_input');
+        if (!$cache->has()) {
+            self::import();
+        }
+    }
+
+    /// - ROUTES
 
     public static function index() {
         global $database;
-        $games = $database->select('games', '*');
 
-        $grouped = [];
+        self::importIfNeeded();
 
-        foreach($games as $singleGame) {
-            $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('W-Y');
-            $grouped[$groupValue][] = $singleGame;
+        $cache = new Cache('xb_bc_index');
+
+        $groupedGames = [];
+
+        // Try grabbing the games from cache or rebuild it
+        if(!$cache->has()) {
+            // No Cache
+            $games = $database->select('games', '*');
+
+            foreach($games as $singleGame) {
+                $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('W-Y');
+                $groupedGames[$groupValue][] = $singleGame;
+            }
+
+            $cache->set($groupedGames, 60*60); // TTL in seconds
+        } else {
+            // We have a cache
+            $groupedGames = $cache->get();
         }
 
-        Flight::render('xbox/index.php', array('games' => $grouped));
+
+        Flight::render('xbox/index.php', array('gamesByWeek' => $groupedGames));
     }
 
     public static function feed() {
+        self::importIfNeeded();
         echo "Feed - Regular";
     }
 
     public static function feedWeekly() {
+        self::importIfNeeded();
         echo "Feed - Weekly";
     }
 }
