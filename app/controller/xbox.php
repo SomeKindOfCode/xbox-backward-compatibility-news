@@ -78,14 +78,10 @@ class XboxController {
         }
     }
 
-    /// - ROUTES
-
-    public static function index() {
+    private static function getGamesByWeek() {
         global $database;
 
-        self::importIfNeeded();
-
-        $cache = new Cache('xb_bc_index');
+        $cache = new Cache('xb_bc_games_weekly');
 
         $groupedGames = [];
 
@@ -105,8 +101,15 @@ class XboxController {
             $groupedGames = $cache->get();
         }
 
+        return $groupedGames;
+    }
 
-        Flight::render('xbox/index.php', array('gamesByWeek' => $groupedGames));
+    /// - ROUTES
+
+    public static function index() {
+        self::importIfNeeded();
+
+        Flight::render('xbox/index.php', array('gamesByWeek' => self::getGamesByWeek()));
     }
 
     public static function feed() {
@@ -116,6 +119,7 @@ class XboxController {
 
     public static function feedWeekly() {
         self::importIfNeeded();
+        $weeklyGames = self::getGamesByWeek();
         echo "Feed - Weekly";
     }
 }
