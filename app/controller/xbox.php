@@ -78,8 +78,20 @@ class XboxController {
         }
     }
 
-    private static function getGamesByWeek() {
+    private static function getGames($where = []) {
         global $database;
+
+        return $database->select(
+            'games',
+            '*',
+            // Add possible overrides
+            array_merge($where, [
+                'ORDER' => 'date_imported DESC'
+            ])
+        );
+    }
+
+    private static function getGamesByWeek() {
 
         $cache = new Cache('xb_bc_games_weekly');
 
@@ -88,16 +100,11 @@ class XboxController {
         // Try grabbing the games from cache or rebuild it
         if(!$cache->has()) {
             // No Cache
-            $games = $database->select(
-                'games',
-                '*',
-                [
-                    'ORDER' => 'date_imported DESC'
-                ]
-            );
+            $games = self::getGames();
 
+            // Group by <YEAR>-<WeekNo>
             foreach($games as $singleGame) {
-                $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('W-Y');
+                $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('Y-W');
                 $groupedGames[$groupValue][] = $singleGame;
             }
 
@@ -110,6 +117,17 @@ class XboxController {
         return $groupedGames;
     }
 
+    private static function feedChannel() {
+        $xml = new SimpleXMLElement('<rss version="2.0"></rss>');
+        $xml->addChild('channel');
+        $xml->channel->addChild('title', 'Xbox Backward Compatibility');
+        $xml->channel->addChild('link', 'https://somekindofcode.com');
+        $xml->channel->addChild('description', 'A newsfeed informing you about new Xbox 360 games that are compatible with Xbox One.');
+        $xml->channel->addChild('pubDate', (new DateTime())->format(DateTime::RSS));
+
+        return $xml;
+    }
+
     /// - ROUTES
 
     public static function index() {
@@ -120,12 +138,46 @@ class XboxController {
 
     public static function feed() {
         self::importIfNeeded();
-        echo "Feed - Regular";
+global $database;
+        // Group Games by Year-Month-Day
+        $groupedGames = [];
+
+        $games = self::getGames([
+            'date_imported[<]' => (new DateTime())->format('Y-m-d 00:00:00') // Don't include the current day
+        ]);
+
+        foreach($games as $singleGame) {
+            $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('d-m-Y');
+            $groupedGames[$groupValue][] = $singleGame;
+        }
+
+        // Render Feed
+        $xml = self::feedChannel();
+        echo $xml->asXML();
     }
 
     public static function feedWeekly() {
         self::importIfNeeded();
         $weeklyGames = self::getGamesByWeek();
-        echo "Feed - Weekly";
+
+        $xml = self::feedChannel();
+
+        foreach($weeklyGames as $week => $gamesOfWeek){
+            $item = $xml->channel->addChild('item');
+
+            // Parse <Week>-<Year> into a DateTime Object
+            $input = explode('-', $week);
+            list($year, $weekNo) = $input;
+
+            $weekDate = new DateTime();
+            $weekDate->setISODate($year, $weekNo);
+
+            $item->addChild('title', $weekDate->format('\W\e\e\k W')); // Week <WeekNo>
+            $item->addChild('link', 'https://somekindofcode.com');
+            $item->addChild('pubDate', $weekDate->format(DateTime::RSS));
+            $item->addChild('description', count($gamesOfWeek));
+        }
+
+        echo $xml->asXML();
     }
 }
