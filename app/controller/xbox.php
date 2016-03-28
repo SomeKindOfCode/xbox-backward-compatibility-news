@@ -42,25 +42,44 @@ class XboxController {
 
     private static function import() {
         global $database;
+        $new_games = [];
 
         $input_games_array = self::getInput();
 
         // Grab slugs in database
         $current_slugs = $database->select('games', 'slug');
 
-        $slugs = [];
-        foreach ($input_games_array as $input_game) {
-            $slugs[] =  self::slug($input_game["title"]);
+        foreach($input_games_array as $input_game) {
+            $input_slug = self::slug($input_game["title"]);
+
+            if(!in_array($input_slug, $current_slugs)) {
+                // game is new
+                $new_games[] = [
+                    "name" => $input_game["title"],
+                    "slug" => $input_slug,
+                    "image" => $input_game["image"],
+                    "url" => $input_game["url"],
+                    "date_imported" => date("d-m-Y H:i:s")
+                ];
+            }
         }
 
-
-        echo "<pre>";
-        print_r($current_slugs);
-        echo "</pre>";
+        // Insert new games
+        if(count($new_games) > 0){
+            $database->insert('games', $new_games);
+            echo "Imported new games";
+        } else {
+            echo "No new games";
+        }
     }
 
     public static function index() {
-        echo "Index Page";
+        global $database;
+        $games = $database->select('games', '*');
+
+        echo "<pre>";
+        print_r($games);
+        echo "</pre>";
     }
 
     public static function feed() {
