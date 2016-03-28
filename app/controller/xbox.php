@@ -128,6 +128,22 @@ class XboxController {
         return $xml;
     }
 
+    private static function HTMLforGamesArray($games) {
+        $response = '<ul>';
+
+        foreach($games as $game){
+            $response .= sprintf(
+                '<li><a href="%s">%s</a></li>',
+                $game["url"],
+                $game["name"]
+            );
+        }
+
+        $response .= '</ul>';
+
+        return $response;
+    }
+
     /// - ROUTES
 
     public static function index() {
@@ -138,12 +154,12 @@ class XboxController {
 
     public static function feed() {
         self::importIfNeeded();
-        
+
         // Group Games by Year-Month-Day
         $groupedGames = [];
 
         $games = self::getGames([
-            'date_imported[<]' => (new DateTime())->format('Y-m-d 00:00:00') // Don't include the current day
+        //    'date_imported[<]' => (new DateTime())->format('Y-m-d 00:00:00') // Don't include the current day
         ]);
 
         foreach($games as $singleGame) {
@@ -153,6 +169,23 @@ class XboxController {
 
         // Render Feed
         $xml = self::feedChannel();
+
+        foreach($groupedGames as $day => $gamesOfDay){
+            $item = $xml->channel->addChild('item');
+
+            $dateOfDay = DateTime::createFromFormat('d-m-Y', $day);
+
+            $item->addChild('title', $dateOfDay->format('l, F jS Y')); // Week <WeekNo>
+            $item->addChild('link', 'https://somekindofcode.com');
+            $item->addChild('pubDate', $dateOfDay->format(DateTime::RSS));
+
+            // Add Description as CDATA
+            $item->description = NULL;
+            $node = dom_import_simplexml($item->description);
+            $no   = $node->ownerDocument;
+            $node->appendChild($no->createCDATASection(self::HTMLforGamesArray($gamesOfDay)));
+        }
+
         echo $xml->asXML();
     }
 
@@ -175,7 +208,12 @@ class XboxController {
             $item->addChild('title', $weekDate->format('\W\e\e\k W')); // Week <WeekNo>
             $item->addChild('link', 'https://somekindofcode.com');
             $item->addChild('pubDate', $weekDate->format(DateTime::RSS));
-            $item->addChild('description', count($gamesOfWeek));
+
+            // Add Description as CDATA
+            $item->description = NULL;
+            $node = dom_import_simplexml($item->description);
+            $no   = $node->ownerDocument;
+            $node->appendChild($no->createCDATASection(self::HTMLforGamesArray($gamesOfWeek)));
         }
 
         echo $xml->asXML();
