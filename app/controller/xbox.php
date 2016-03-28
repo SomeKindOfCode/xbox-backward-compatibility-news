@@ -78,7 +78,14 @@ class XboxController {
         global $database;
         $games = $database->select('games', '*');
 
-        Flight::render('xbox/index.php', array('games' => $games));
+        $grouped = [];
+
+        foreach($games as $singleGame) {
+            $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('W-Y');
+            $grouped[$groupValue][] = $singleGame;
+        }
+
+        Flight::render('xbox/index.php', array('games' => $grouped));
     }
 
     public static function feed() {
