@@ -121,7 +121,7 @@ class XboxController {
         $xml = new SimpleXMLElement('<rss version="2.0"></rss>');
         $xml->addChild('channel');
         $xml->channel->addChild('title', 'Xbox Backward Compatibility');
-        $xml->channel->addChild('link', 'https://somekindofcode.com');
+        $xml->channel->addChild('link', 'http://xbox.somekindofcode.com');
         $xml->channel->addChild('description', 'A newsfeed informing you about new Xbox 360 games that are compatible with Xbox One.');
         $xml->channel->addChild('pubDate', (new DateTime())->format(DateTime::RSS));
 
@@ -176,7 +176,7 @@ class XboxController {
             $dateOfDay = DateTime::createFromFormat('d-m-Y', $day);
 
             $item->addChild('title', $dateOfDay->format('l, F jS Y')); // Week <WeekNo>
-            $item->addChild('link', 'https://somekindofcode.com');
+            $item->addChild('link', 'http://xbox.somekindofcode.com');
             $item->addChild('pubDate', $dateOfDay->format(DateTime::RSS));
 
             // Add Description as CDATA
@@ -206,7 +206,7 @@ class XboxController {
             $weekDate->setISODate($year, $weekNo);
 
             $item->addChild('title', $weekDate->format('\W\e\e\k W')); // Week <WeekNo>
-            $item->addChild('link', 'https://somekindofcode.com');
+            $item->addChild('link', 'http://xbox.somekindofcode.com');
             $item->addChild('pubDate', $weekDate->format(DateTime::RSS));
 
             // Add Description as CDATA
