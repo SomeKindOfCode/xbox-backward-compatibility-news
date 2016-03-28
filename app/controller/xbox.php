@@ -149,7 +149,10 @@ class XboxController {
     public static function index() {
         self::importIfNeeded();
 
-        Flight::render('xbox/index.php', array('gamesByWeek' => self::getGamesByWeek()));
+        Flight::render('xbox/index.php', [
+            'gamesByWeek' => self::getGamesByWeek(),
+            'gameCount' => count(self::getGames())
+        ]);
     }
 
     public static function feed() {

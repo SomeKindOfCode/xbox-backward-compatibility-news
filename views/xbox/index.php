@@ -39,6 +39,8 @@
     <body>
         <div class="container">
             <h1>Weekly Backwards Compatibility</h1>
+            <p>Current Game Count: <?= $gameCount; ?></p>
+
             <div class="feeds">
                 <a href="/feed">
                     <div class="feed">
@@ -51,22 +53,23 @@
                     </div>
                 </a>
             </div>
-        <?php foreach($gamesByWeek as $week => $weeklyGames){ ?>
-            <h2>
-                <?php
-                $input = explode('-', $week);
-                list($year, $weekNo) = $input;
 
-                $weekDate = new DateTime();
-                $weekDate->setISODate($year, $weekNo);
+            <?php foreach($gamesByWeek as $week => $weeklyGames){ ?>
+                <h2>
+                    <?php
+                    $input = explode('-', $week);
+                    list($year, $weekNo) = $input;
 
-                echo $weekDate->format('\W\e\e\k W - Y');
-                ?>
-            </h2>
-            <?php foreach($weeklyGames as $singleGame){ ?>
-                <img src="<?= $singleGame["image"] ?>"\>
+                    $weekDate = new DateTime();
+                    $weekDate->setISODate($year, $weekNo);
+
+                    echo $weekDate->format('\W\e\e\k W - Y');
+                    ?>
+                </h2>
+                <?php foreach($weeklyGames as $singleGame){ ?>
+                    <img src="<?= $singleGame["image"] ?>"\>
+                <?php } ?>
             <?php } ?>
-        <?php } ?>
         </div>
     </body>
 </html>
