@@ -159,7 +159,7 @@ class XboxController {
         $groupedGames = [];
 
         $games = self::getGames([
-        //    'date_imported[<]' => (new DateTime())->format('Y-m-d 00:00:00') // Don't include the current day
+            'date_imported[<]' => (new DateTime())->format('Y-m-d 00:00:00') // Don't include the current day
         ]);
 
         foreach($games as $singleGame) {
