@@ -100,7 +100,14 @@ class XboxController {
         // Try grabbing the games from cache or rebuild it
         if(!$cache->has()) {
             // No Cache
-            $games = self::getGames();
+
+            $beginningOfCurrentWeek = new DateTime('this week');
+            $games = self::getGames([
+                'date_imported[<]' => sprintf(
+                    'Datetime(%s)',
+                    $beginningOfCurrentWeek->format('Y-m-d 00:00:00') // Don't include the current week
+                )
+            ]);
 
             // Group by <YEAR>-<WeekNo>
             foreach($games as $singleGame) {
@@ -197,6 +204,7 @@ class XboxController {
 
     public static function feedWeekly() {
         self::importIfNeeded();
+
         $weeklyGames = self::getGamesByWeek();
 
         $xml = self::feedChannel();
