@@ -91,9 +91,9 @@ class XboxController {
         );
     }
 
-    private static function getGamesByWeek() {
+    private static function getGamesByWeek($where = []) {
 
-        $cache = new Cache('xb_bc_games_weekly');
+        $cache = new Cache(sprintf('xb_bc_games_weekly_%s', json_encode($where)));
 
         $groupedGames = [];
 
@@ -102,9 +102,7 @@ class XboxController {
             // No Cache
 
             $beginningOfCurrentWeek = new DateTime('this week');
-            $games = self::getGames([
-                'date_imported[<]' => $beginningOfCurrentWeek->format('Y-m-d 00:00:00') // Don't include the current week
-            ]);
+            $games = self::getGames($where);
 
             // Group by <YEAR>-<WeekNo>
             foreach($games as $singleGame) {
@@ -199,7 +197,9 @@ class XboxController {
     public static function feedWeekly() {
         self::importIfNeeded();
 
-        $weeklyGames = self::getGamesByWeek();
+        $weeklyGames = self::getGamesByWeek([
+            'date_imported[<]' => $beginningOfCurrentWeek->format('Y-m-d 00:00:00') // Don't include the current week
+        ]);
 
         $xml = self::feedChannel();
 
