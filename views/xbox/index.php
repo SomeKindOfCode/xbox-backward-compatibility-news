@@ -67,7 +67,7 @@
                     ?>
                 </h2>
                 <?php foreach($weeklyGames as $singleGame){ ?>
-                    <img src="<?= $singleGame["image"] ?>"\>
+                    <a href="<?= $singleGame["url"] ?>" target="_blank" rel="nofollow"><img src="<?= $singleGame["image"] ?>"\></a>
                 <?php } ?>
             <?php } ?>
         </div>
