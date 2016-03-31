@@ -4,9 +4,9 @@ class XboxController {
     private static $importList = "http://www.xbox.com/en-US/xbox-one/backward-compatibility/bcglist.js";
 
     private static function slug($string) {
+        $string = preg_replace('/[^a-zA-Z0-9]/', '', $string); // everything that is not a letter or number will be removed
         $string = trim($string); // remove trailing spaces
         $string = strtolower($string); // lowercase everything
-        $string = preg_replace('/\W/', '', $string); // everything that is not a letter will be removed
         return $string;
     }
 
