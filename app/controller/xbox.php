@@ -103,10 +103,7 @@ class XboxController {
 
             $beginningOfCurrentWeek = new DateTime('this week');
             $games = self::getGames([
-                'date_imported[<]' => sprintf(
-                    'Datetime(%s)',
-                    $beginningOfCurrentWeek->format('Y-m-d 00:00:00') // Don't include the current week
-                )
+                'date_imported[<]' => $beginningOfCurrentWeek->format('Y-m-d 00:00:00') // Don't include the current week
             ]);
 
             // Group by <YEAR>-<WeekNo>
@@ -169,10 +166,7 @@ class XboxController {
         $groupedGames = [];
 
         $games = self::getGames([
-            'date_imported[<]' => sprintf(
-                'Datetime(%s)',
-                (new DateTime())->format('Y-m-d 00:00:00') // Don't include the current day
-            )
+            'date_imported[<]' => (new DateTime())->format('Y-m-d 00:00:00') // Don't include the current day
         ]);
 
         foreach($games as $singleGame) {
