@@ -60,7 +60,7 @@ class XboxController {
                     "slug" => $input_slug,
                     "image" => $input_game["image"],
                     "url" => $input_game["url"],
-                    "date_imported" => date("d-m-Y H:i:s")
+                    "date_imported" => date("Y-m-d H:i:s")
                 ];
             }
         }
@@ -111,7 +111,7 @@ class XboxController {
 
             // Group by <YEAR>-<WeekNo>
             foreach($games as $singleGame) {
-                $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('Y-W');
+                $groupValue = DateTime::createFromFormat("Y-m-d H:i:s", $singleGame['date_imported'], new DateTimeZone('UTC'))->format('Y-W');
                 $groupedGames[$groupValue][] = $singleGame;
             }
 
@@ -176,7 +176,7 @@ class XboxController {
         ]);
 
         foreach($games as $singleGame) {
-            $groupValue = DateTime::createFromFormat("d-m-Y H:i:s", $singleGame['date_imported'])->format('d-m-Y');
+            $groupValue = DateTime::createFromFormat("Y-m-d H:i:s", $singleGame['date_imported'], new DateTimeZone('UTC'))->format('Y-m-d');
             $groupedGames[$groupValue][] = $singleGame;
         }
 
@@ -186,7 +186,7 @@ class XboxController {
         foreach($groupedGames as $day => $gamesOfDay){
             $item = $xml->channel->addChild('item');
 
-            $dateOfDay = DateTime::createFromFormat('d-m-Y', $day);
+            $dateOfDay = DateTime::createFromFormat('Y-m-d', $day, new DateTimeZone('UTC'));
 
             $item->addChild('title', $dateOfDay->format('l, F jS Y')); // Week <WeekNo>
             $item->addChild('link', 'http://xbox.somekindofcode.com');

@@ -39,7 +39,7 @@ $datedGames = [
 ];
 
 foreach($datedGames as $date => $gameArray) {
-	$dateObj = DateTime::createFromFormat('Y-m-d', $date);
+	$dateObj = DateTime::createFromFormat('Y-m-d', $date, new DateTimeZone('UTC'));
 	$database->update('games', [
 		'date_imported' => $dateObj->format('Y-m-d 12:00:00') // Just set them to noon
 	],
