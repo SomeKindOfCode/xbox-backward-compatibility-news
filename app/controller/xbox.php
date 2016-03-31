@@ -41,7 +41,7 @@ class XboxController {
         }
     }
 
-    private static function import() {
+    public static function import() {
         global $database;
         $new_games = [];
 
