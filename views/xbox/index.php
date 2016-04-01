@@ -54,6 +54,9 @@
                 </a>
             </div>
 
+            <h3>IFTTT</h3>
+            <a href="https://ifttt.com/view_embed_recipe/403631-xbox-backward-compatibility-push" target = "_blank" class="embed_recipe embed_recipe-l_32" id= "embed_recipe-403631"><img src= 'https://ifttt.com/recipe_embed_img/403631' alt="IFTTT Recipe: Xbox Backward Compatibility Push connects feed to pushover" width="370px" style="max-width:100%"/></a>
+
             <?php foreach($gamesByWeek as $week => $weeklyGames){ ?>
                 <h2>
                     <?php
@@ -71,5 +74,7 @@
                 <?php } ?>
             <?php } ?>
         </div>
+
+        <script async type="text/javascript" src= "//ifttt.com/assets/embed_recipe.js"></script>
     </body>
 </html>
