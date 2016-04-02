@@ -9,9 +9,11 @@
                 margin: 15px auto;
                 max-width: 920px;
             }
+            .row {
+                margin: 10px auto;
+            }
             .feeds {
                 text-align: center;
-                margin: 0px auto;
             }
             .feeds a {
                 color: white;
@@ -33,7 +35,7 @@
                 content: ' \f0d8';
             }
             .sort.desc:after{
-                content: ' \f0d7';
+                content: '  \f0d7';
             }
         </style>
     </head>
@@ -42,24 +44,24 @@
             <h1>Weekly Backwards Compatibility</h1>
             <p>Current Game Count: <?= count($games); ?></p>
 
-            <div class="feeds">
+            <div class="row feeds">
                 <a href="/feed">
-                    <div class="feed">
+                    <button class="btn feed">
                         <i class="fa fa-rss"></i> Daily
-                    </div>
+                    </button>
                 </a>
                 <a href="/feed/weekly">
-                    <div class="feed">
+                    <button class="btn feed">
                         <i class="fa fa-rss"></i> Weekly
-                    </div>
+                    </button>
                 </a>
             </div>
 
-            <div id="games">
+            <div id="games" class="row">
                 <div class="input-group">
                     <input class="form-control search" placeholder="Search" />
                     <span class="input-group-btn">
-                        <button class="btn btn-default sort" data-sort="title">Sort by title</button>
+                        <button class="btn btn-primary sort" data-sort="title">Sort by title</button>
                     </span>
                 </div>
 
