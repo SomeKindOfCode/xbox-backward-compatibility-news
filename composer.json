@@ -1,6 +1,7 @@
 {
     "require": {
         "mikecao/flight": "^1.2",
-        "catfan/Medoo": "^1.0"
+        "catfan/Medoo": "^1.0",
+        "smarty/smarty": "^3.1"
     }
 }
