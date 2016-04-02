@@ -13,6 +13,7 @@ Flight::register('view', 'Smarty', array(), function($smarty){
     $smarty->cache_dir = __DIR__ . '/../cache/';
 
     $smarty->registerPlugin("modifier","DateTime", "dateTimeToDate");
+    $smarty->registerPlugin("modifier","count", "count");
 });
 Flight::map('render', function($template, $data){
     Flight::view()->assign($data);

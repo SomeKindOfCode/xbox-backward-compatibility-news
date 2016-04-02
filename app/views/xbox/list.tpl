@@ -3,7 +3,7 @@
 {block name=body}
 
 <h1>Weekly Backwards Compatibility</h1>
-<p>Current Game Count: <?= count($games); ?></p>
+<p>Current Game Count: {$games|count}</p>
 
 {include file="./feeds.tpl"}
 
