@@ -157,6 +157,14 @@ class XboxController {
         ]);
     }
 
+    public static function listWithSearch() {
+        self::importIfNeeded();
+
+        Flight::render('xbox/list.php', [
+            'games' => self::getGames()
+        ]);
+    }
+
     public static function feed() {
         self::importIfNeeded();
 
