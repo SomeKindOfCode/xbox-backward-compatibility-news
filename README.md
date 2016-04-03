@@ -6,13 +6,18 @@ This script grabs the list of Xbox 360 games that are backward compatible with t
 
 - [Flight](http://flightphp.com)
 - [Medoo](http://medoo.in)
+- [Smarty](http://www.smarty.net)
+- [Bootstrap](http://getbootstrap.com)
+- [List.js](http://www.listjs.com)
+  - Modified and locally integrated because of bugs in the search
+
 
 We also use APC Cache to improve caching, so make sure it is available.
 
 ## Setup
 
 Clone the repository into your desired folder and point your server root directory to the `public` folder.
-In the project root, run `composer install` on the command line and execute the `setup.php` to setup the core database structure.
+In the project root, run `composer install` on the command line and execute the `setup.php` to setup the core database structure. The setup will also do an initial import and redate all the games as far as possible.
 
 In the default setup, this app uses *SQLite* and stores the database in the `db` folder.
 To modify these settings, take a look at the [Medoo Documentation](http://medoo.in/api/new) and modify `app/bootstrap.php` as desired.
