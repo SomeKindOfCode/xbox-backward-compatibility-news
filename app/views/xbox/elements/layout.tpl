@@ -9,7 +9,7 @@
                 margin: 15px auto;
                 max-width: 920px;
             }
-            .row {
+            .row, .game{
                 margin: 10px auto;
             }
             .feeds {
@@ -37,12 +37,30 @@
             .sort.desc:after{
                 content: '  \f0d7';
             }
+            .game { text-align: center; }
+            .game img {
+                max-width: 100%;
+            }
+
+            footer {
+                margin-bottom: 50px;
+            }
+            footer a .fa {
+                font-size: 30px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
             {block name=body}Nothing here{/block}
         </div>
+
+        <hr/>
+
+        <footer class="text-center">
+            <p><small>Made by <a href="https://somekindofcode.com">somekindofcode.com</a></small></p>
+            <a href="https://github.com/SomeKindOfCode/xbox-backward-compatibility-news"><i class="fa fa-github"></i></a>
+        </footer>
 
         <script src="/js/list.js"></script>
         <script type="text/javascript" src= "/js/script.js"></script>
