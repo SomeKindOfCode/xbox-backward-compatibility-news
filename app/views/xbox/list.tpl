@@ -10,6 +10,7 @@
 </div>
 
 {include file="./feeds.tpl"}
+{include file="./faq.tpl"}
 
 <div id="games">
     <div class="row input-group">
