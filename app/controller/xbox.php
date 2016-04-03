@@ -160,7 +160,7 @@ class XboxController {
     public static function listWithSearch() {
         self::importIfNeeded();
 
-        Flight::render('xbox/list.php', [
+        Flight::render('xbox/list.tpl', [
             'games' => self::getGames()
         ]);
     }

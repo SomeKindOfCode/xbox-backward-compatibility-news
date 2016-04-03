@@ -1,8 +1,6 @@
 var options = {
   valueNames: [
-      'title',
-      'date',
-      { data: ['slug'] }
+      { data: ['slug', 'title', 'release'] }
   ]
 };
 var gamesList = new List('games', options);
