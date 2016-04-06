@@ -35,7 +35,8 @@ $datedGames = [
 	'2016-03-28' => ['halowars', 'soulcaliberiihd', 'thekingoffighters98'],
 	'2016-03-29' => ['left4dead2'],
 	'2016-03-30' => ['deadspace'],
-	'2016-03-31' => ['saintsrowiv']
+	'2016-03-31' => ['saintsrowiv'],
+	'2016-04-06' => ['gunstarheroes', 'outland']
 ];
 
 foreach($datedGames as $date => $gameArray) {
