@@ -36,7 +36,11 @@ $datedGames = [
 	'2016-03-29' => ['left4dead2'],
 	'2016-03-30' => ['deadspace'],
 	'2016-03-31' => ['saintsrowiv'],
-	'2016-04-06' => ['gunstarheroes', 'outland']
+	'2016-04-06' => ['gunstarheroes', 'outland'],
+	'2016-04-12' => ['dukenukemmanhattanproject', 'garoumarkofthewolves', 'sonicthefighters'],
+	'2016-04-14' => ['doom3bfgedition', 'monacowhatsyoursismine'],
+	'2016-04-21' => ['raymanorigins'],
+	'2016-04-26' => ['alteredbeast', 'comixzone', 'doubledragonneon', 'ghostbusterssanctumofslime', 'thecave']
 ];
 
 foreach($datedGames as $date => $gameArray) {
